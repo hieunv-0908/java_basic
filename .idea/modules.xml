@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/HN_KS24_CNTT5_NguyenVanHieu/HN_KS24_CNTT5_NguyenVanHieu.iml" filepath="$PROJECT_DIR$/HN_KS24_CNTT5_NguyenVanHieu/HN_KS24_CNTT5_NguyenVanHieu.iml" />
+      <module fileurl="file://$PROJECT_DIR$/baithuchanh_thuyettrinh/baithuchanh_thuyettrinh.iml" filepath="$PROJECT_DIR$/baithuchanh_thuyettrinh/baithuchanh_thuyettrinh.iml" />
+      <module fileurl="file://$PROJECT_DIR$/firt_folder_java/firt_folder_java.iml" filepath="$PROJECT_DIR$/firt_folder_java/firt_folder_java.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/java_file_code.iml" filepath="$PROJECT_DIR$/.idea/java_file_code.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ss2/ss2.iml" filepath="$PROJECT_DIR$/ss2/ss2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ss3/ss3.iml" filepath="$PROJECT_DIR$/ss3/ss3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ss4/ss4.iml" filepath="$PROJECT_DIR$/ss4/ss4.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ss6/ss6.iml" filepath="$PROJECT_DIR$/ss6/ss6.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ss7/ss7.iml" filepath="$PROJECT_DIR$/ss7/ss7.iml" />
+    </modules>
+  </component>
+</project>
