@@ -9,16 +9,4 @@ public class Admin extends User {
 
     public Admin() {
     }
-
-    public void managerMachine() {
-
-    }
-
-    public void managerMachineConfiguration() {
-
-    }
-
-    public void handleReports() {
-
-    }
 }

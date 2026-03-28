@@ -120,14 +120,4 @@ public abstract class User {
     public void setCreated_at(Date created_at) {
         this.created_at = created_at;
     }
-
-    public boolean login(String username, String password) {
-        // Logic to authenticate user
-        return true; // Placeholder for actual authentication logic
-    }
-
-    public boolean logout() {
-        // Logic to log out user
-        return true;
-    }
 }

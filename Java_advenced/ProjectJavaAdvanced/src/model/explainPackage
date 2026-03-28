@@ -1,7 +1,0 @@
-* Package liên quan đến dữ liệu bao gồm các class như: User, Product, Order, Cart, v.v...
-* File này dùng để giải thích các class và tác dụng của các thuộc tính được sử dựng trong các class đó.
-* File còn là tổng hợp những kiến thực được áp dụng.
-
-* Kiến thức áp dụng
-- 1 Class:
-+ abs class

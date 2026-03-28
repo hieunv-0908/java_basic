@@ -15,7 +15,7 @@ public class UserDAO {
         String sql = "SELECT * FROM users WHERE role = ?";
         try {
             PreparedStatement prsmt = connection.prepareStatement(sql);
-            prsmt.setString(1, queryNeed);
+            prsmt.setString(1, queryNeed.toUpperCase());
             ResultSet resultSet = prsmt.executeQuery();
             while (resultSet.next()) {
                 String role = resultSet.getString("role");
@@ -162,4 +162,5 @@ public class UserDAO {
     public static void main(String[] args) {
         queryDb("admin").forEach(user -> System.out.println(user.getFullName()));
     }
+
 }

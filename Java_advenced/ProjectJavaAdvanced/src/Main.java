@@ -1,3 +1,8 @@
+import interfaceRole.InterfaceAdmin;
+import interfaceRole.InterfaceCustomer;
+import interfaceRole.InterfaceStaff;
+import interfaceRole.InterfaceUser;
+import service.AdminService;
 import service.UserService;
 import model.User;
 import model.Admin;
@@ -8,10 +13,13 @@ import java.util.Scanner;
 
 public class Main {
     private static UserService userService = new UserService();
+    private static AdminService adminService = new AdminService();
+
     private static Scanner scanner = new Scanner(System.in);
     private static User currentUser = null;
 
     public static void main(String[] args) {
+
         while (true) {
             if (currentUser == null) {
                 showMainMenu();
@@ -23,9 +31,7 @@ public class Main {
 
     private static void showMainMenu() {
         System.out.println("\n=== CYBER GAMING SYSTEM ===");
-        System.out.println("1. Login");
-        System.out.println("2. Register");
-        System.out.println("3. Exit");
+        InterfaceUser.displayInterface();
         System.out.print("Choose an option: ");
 
         int choice = scanner.nextInt();
@@ -55,7 +61,11 @@ public class Main {
 
         // Only show admin options for admin users
         if (currentUser instanceof Admin) {
-            System.out.println("3. Create Staff Account");
+            InterfaceAdmin.displayInterface();
+        } else if (currentUser instanceof Staff) {
+            InterfaceStaff.displayInterface();
+        } else if (currentUser instanceof Customer) {
+            InterfaceCustomer.displayInterface();
         }
 
         System.out.print("Choose an option: ");
@@ -123,9 +133,6 @@ public class Main {
 
     private static void viewProfile() {
         System.out.println("\n=== PROFILE ===");
-        System.out.println("User ID: " + currentUser.getUserId());
-        System.out.println("User Code: " + currentUser.getUserCode());
-        System.out.println("Username: " + currentUser.getUserName());
         System.out.println("Full Name: " + currentUser.getFullName());
         System.out.println("Age: " + currentUser.getAge());
         System.out.println("Email: " + currentUser.getEmail());
@@ -158,7 +165,7 @@ public class Main {
         System.out.print("Phone: ");
         String phone = scanner.nextLine();
 
-        boolean success = userService.createStaffAccount(userCode, username, password, fullName, age, email, phone);
+        boolean success = adminService.createStaffAccount(userCode, username, password, fullName, age, email, phone);
         if (success) {
             System.out.println("Staff account created successfully!");
         } else {
