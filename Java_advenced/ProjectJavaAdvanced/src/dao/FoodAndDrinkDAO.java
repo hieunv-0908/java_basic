@@ -1,38 +1,36 @@
 package dao;
 
-import model.*;
+import model.FoodAndDrink;
 import ultil.SqlConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
-public class ServiceDAO {
+public class FoodAndDrinkDAO {
     static Connection connection = SqlConnection.getconnection();
 
-    public static List<Service> queryDb() {
-        List<Service> list = new ArrayList<>();
-        String sql = "SELECT * FROM services";
+    public static List<FoodAndDrink> queryDb() {
+        List<FoodAndDrink> list = new ArrayList<>();
+        String sql = "SELECT * FROM foodAndDrinks";
         try {
             PreparedStatement prsmt = connection.prepareStatement(sql);
             ResultSet resultSet = prsmt.executeQuery();
             while (resultSet.next()) {
-                int serviceId = resultSet.getInt("service_id");
+                int foodAndDrinkId = resultSet.getInt("foodAndDrink_id");
                 String name = resultSet.getString("name");
                 String description = resultSet.getString("description");
-                Double price = resultSet.getDouble("price");
+                double price = resultSet.getDouble("price");
                 int stock = resultSet.getInt("stock");
 
-                Service service;
-                service = new Service(
-                        serviceId,
+                FoodAndDrink foodAndDrink = new FoodAndDrink(
+                        foodAndDrinkId,
                         name,
                         description,
                         price,
                         stock
                 );
-                list.add(service);
+                list.add(foodAndDrink);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -41,16 +39,16 @@ public class ServiceDAO {
         return list;
     }
 
-    public static boolean createService() {
-        Scanner scanner = new Scanner(System.in);
-        String sql = "INSERT INTO services(name, description, price, stock) value (?,?,?,?)";
-        System.out.println("Mời nhập tên dịch vụ muốn tạo: ");
+    public static boolean createFoodAndDrink() {
+        java.util.Scanner scanner = new java.util.Scanner(System.in);
+        String sql = "INSERT INTO foodAndDrinks(name, description, price, stock) value (?,?,?,?)";
+        System.out.println("Mời nhập tên đồ ăn/thức uống muốn tạo: ");
         String name = scanner.nextLine();
-        System.out.println("Mời nhập mô tả dịch vụ muốn tạo: ");
+        System.out.println("Mời nhập mô tả đồ ăn/thức uống muốn tạo: ");
         String description = scanner.nextLine();
-        System.out.println("Mời nhập giá dịch vụ muốn tạo: ");
+        System.out.println("Mời nhập giá đồ ăn/thức uống muốn tạo: ");
         double price = Double.parseDouble(scanner.nextLine());
-        System.out.println("Mời nhập số lượng dịch vụ muốn tạo: ");
+        System.out.println("Mời nhập số lượng đồ ăn/thức uống muốn tạo: ");
         int stock = Integer.parseInt(scanner.nextLine());
 
         try {
@@ -61,9 +59,9 @@ public class ServiceDAO {
             prsmt.setInt(4, stock);
             int rowsAffected = prsmt.executeUpdate();
             if (rowsAffected > 0) {
-                System.out.println("Dịch vụ đã được tạo thành công!");
+                System.out.println("Đồ ăn/thức uống đã được tạo thành công!");
             } else {
-                System.out.println("Tạo dịch vụ thất bại.");
+                System.out.println("Tạo đồ ăn/thức uống thất bại.");
             }
         } catch (SQLException e) {
             e.printStackTrace();

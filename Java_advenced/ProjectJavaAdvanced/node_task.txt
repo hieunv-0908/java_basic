@@ -11,6 +11,9 @@ Quản lý một đối tượng đơn giản nhất
 			Phân trang
 
 
+Buổi 2:
+	+ Quản lý máy tính
+	+ Dịch vụ
 
 
 -- lưu ý: nếu có người dùng chơi hết giờ mà muốn chơi tiếp nhưng đã có người đặt trước giờ đó thì phải xử lý và ưu tiên người đã đặt trước
