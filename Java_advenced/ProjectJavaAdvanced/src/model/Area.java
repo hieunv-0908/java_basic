@@ -17,4 +17,8 @@ public enum Area {
         }
         throw new IllegalArgumentException("Invalid role: " + area);
     }
+
+    public String getAreaCode() {
+        return areaCode;
+    }
 }

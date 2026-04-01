@@ -1,14 +1,14 @@
 package model;
 
 public class Machine {
-    private String machineId;
+    private int machineId;
     private String machineCode;
     private Area area;
     private String config;
     private double pricePerHour;
     private StatusMachine statusMachine;
 
-    public Machine(String machineId, String machineCode, Area area, String config, double pricePerHour, StatusMachine statusMachine) {
+    public Machine(int machineId, String machineCode, Area area, String config, double pricePerHour, StatusMachine statusMachine) {
         this.machineId = machineId;
         this.machineCode = machineCode;
         this.area = area;
@@ -20,11 +20,11 @@ public class Machine {
     public Machine() {
     }
 
-    public String getMachineId() {
+    public int getMachineId() {
         return machineId;
     }
 
-    public void setMachineId(String machineId) {
+    public void setMachineId(int machineId) {
         this.machineId = machineId;
     }
 

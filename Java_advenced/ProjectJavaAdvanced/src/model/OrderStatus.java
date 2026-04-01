@@ -1,13 +1,13 @@
 package model;
 
-public enum StatusMachine {
-    AVAILABLE("AVAILABLE"),
-    IN_USE("IN_USE"),
-    MAINTENANCE("MAINTENANCE");
+public enum OrderStatus {
+    PENDING("PENDING"),
+    PREPARING("PREPARING"),
+    DONE("DONE");
 
     private String statusCode;
 
-    StatusMachine(String statusCode) {
+    OrderStatus(String statusCode) {
         this.statusCode = statusCode;
     }
 
@@ -15,8 +15,8 @@ public enum StatusMachine {
         return statusCode;
     }
 
-    public static StatusMachine fromStatus(String statusCode) {
-        for (StatusMachine s : StatusMachine.values()) {
+    public static OrderStatus fromStatus(String statusCode) {
+        for (OrderStatus s : OrderStatus.values()) {
             if (s.statusCode.equals(statusCode)) return s;
         }
         throw new IllegalArgumentException("Invalid status: " + statusCode);

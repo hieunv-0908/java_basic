@@ -1,85 +1,80 @@
 package interfaceRole;
 
 import java.util.Scanner;
-import service.AdminService;
-import service.ProductService;
+
 import model.Admin;
 
 public class InterfaceAdmin {
     private static Scanner scanner = new Scanner(System.in);
-    private static AdminService adminService = new AdminService();
-    private static ProductService productService = new ProductService();
 
-    public static void displayInterface() {
-        System.out.println("3. Create Staff Account");
-        System.out.println("4. View Products");
+    public static void displayMainMenu() {
+        System.out.println("\n╔═══════════════════════════════════════════════════╗");
+        System.out.println("║   CHÀO MỪNG ĐẾN HỆ THỐNG QUẢN LÝ CYBER GAMING   ║");
+        System.out.println("╠═══════════════════════════════════════════════════╣");
+        System.out.println("║ 1. Xem hồ sơ cá nhân                              ║");
+        System.out.println("║ 2. Quản lý dịch vụ                                ║");
+        System.out.println("║ 3. Quản lý máy trạm                               ║");
+        System.out.println("║ 4. Quản lý đồ ăn/thức uống                        ║");
+        System.out.println("║ 5. Quản lý tài khoản                              ║");
+        System.out.println("║ 6. Đăng xuất                                      ║");
+        System.out.println("╚═══════════════════════════════════════════════════╝");
     }
 
     public static boolean handleAdminMenu(Admin admin) {
-        System.out.println("\n=== WELCOME " + admin.getFullName().toUpperCase() + " ===");
-        System.out.println("Role: " + admin.getRole());
-        System.out.println("1. View Profile");
-        System.out.println("2. Logout");
-        displayInterface();
+        while (true) {
+            System.out.println("\n╔════════════════════════════════════════════════╗");
+            System.out.println("║  ADMIN: " + String.format("%-37s", admin.getFullName()) + " ║");
+            System.out.println("╚════════════════════════════════════════════════╝");
 
-        System.out.print("Choose an option: ");
+            displayMainMenu();
+            System.out.print("Chọn chức năng: ");
 
-        int choice = scanner.nextInt();
-        scanner.nextLine(); // consume newline
+            int choice;
+            try {
+                choice = scanner.nextInt();
+                scanner.nextLine();
+            } catch (Exception e) {
+                scanner.nextLine();
+                System.out.println("Nhập không hợp lệ!");
+                continue;
+            }
 
-        switch (choice) {
-            case 1:
-                viewProfile(admin);
-                return true;
-            case 2:
-                System.out.println("Logged out successfully!");
-                return false;
-            case 3:
-                createStaffAccount();
-                return true;
-            case 4:
-                productService.displayAllProducts();
-                return true;
-            default:
-                System.out.println("Invalid choice!");
-                return true;
+            switch (choice) {
+                case 1:
+                    viewProfile(admin);
+                    break;
+                case 2:
+                    InterfaceServiceManagement.handleMenu();
+                    break;
+                case 3:
+                    InterfaceMachineManagement.handleMenu();
+                    break;
+                case 4:
+                    InterfaceProductManagement.handleMenu();
+                    break;
+                case 5:
+                    InterfaceAccountManagement.handleMenu();
+                    break;
+                case 6:
+                    System.out.println("Đã đăng xuất thành công!");
+                    return false;
+                default:
+                    System.out.println("Lựa chọn không hợp lệ!");
+            }
         }
     }
 
     private static void viewProfile(Admin admin) {
-        System.out.println("\n=== PROFILE ===");
-        System.out.println("Full Name: " + admin.getFullName());
-        System.out.println("Age: " + admin.getAge());
-        System.out.println("Email: " + admin.getEmail());
-        System.out.println("Phone: " + admin.getPhone());
-        System.out.println("Role: " + admin.getRole());
-        System.out.println("Balance: $" + admin.getBalance());
-        System.out.println("Created At: " + admin.getCreated_at());
-    }
-
-    private static void createStaffAccount() {
-        System.out.println("\n=== CREATE STAFF ACCOUNT ===");
-        System.out.print("User Code: ");
-        String userCode = scanner.nextLine();
-        System.out.print("Username: ");
-        String username = scanner.nextLine();
-        System.out.print("Password: ");
-        String password = scanner.nextLine();
-        System.out.print("Full Name: ");
-        String fullName = scanner.nextLine();
-        System.out.print("Age: ");
-        int age = scanner.nextInt();
-        scanner.nextLine(); // consume newline
-        System.out.print("Email: ");
-        String email = scanner.nextLine();
-        System.out.print("Phone: ");
-        String phone = scanner.nextLine();
-
-        boolean success = adminService.createStaffAccount(userCode, username, password, fullName, age, email, phone);
-        if (success) {
-            System.out.println("Staff account created successfully!");
-        } else {
-            System.out.println("Failed to create staff account!");
-        }
+        System.out.println("\n╔════════════════════════════════════════════════╗");
+        System.out.println("║              HỒ SƠ CÁ NHÂN                      ║");
+        System.out.println("╠════════════════════════════════════════════════╣");
+        System.out.println("║ Tên: " + String.format("%-42s", admin.getFullName()) + " ║");
+        System.out.println("║ Tuổi: " + String.format("%-41s", admin.getAge()) + " ║");
+        System.out.println("║ Email: " + String.format("%-40s", admin.getEmail()) + " ║");
+        System.out.println("║ Điện thoại: " + String.format("%-37s", admin.getPhone()) + " ║");
+        System.out.println("║ Chức vụ: " + String.format("%-38s", admin.getRole()) + " ║");
+        System.out.println("║ Số dư: " + String.format("%-40s", "$" + admin.getBalance()) + " ║");
+        System.out.println("║ Ngày tạo: " + String.format("%-38s", admin.getCreated_at()) + " ║");
+        System.out.println("╚════════════════════════════════════════════════╝");
     }
 }

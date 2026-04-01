@@ -163,4 +163,40 @@ public class UserDAO {
         queryDb("admin").forEach(user -> System.out.println(user.getFullName()));
     }
 
+    public static User getUserById(int userId) {
+        String sql = "SELECT * FROM users WHERE user_id = ?";
+        try {
+            PreparedStatement prsmt = connection.prepareStatement(sql);
+            prsmt.setInt(1, userId);
+            ResultSet resultSet = prsmt.executeQuery();
+            if (resultSet.next()) {
+                String role = resultSet.getString("role");
+                String userCode = resultSet.getString("user_code");
+                String username = resultSet.getString("username");
+                String password = resultSet.getString("password");
+                String fullName = resultSet.getString("full_name");
+                if (fullName == null) fullName = "Unknown";
+                int age = resultSet.getInt("age");
+                String email = resultSet.getString("email");
+                if (email == null) email = "";
+                String phone = resultSet.getString("phone");
+                Double balance = resultSet.getDouble("balance");
+                Timestamp created_at = resultSet.getTimestamp("created_at");
+                if (created_at == null) {
+                    created_at = new Timestamp(System.currentTimeMillis());
+                }
+
+                if (role.equals("ADMIN")) {
+                    return new Admin(userId, userCode, username, password, fullName, age, email, phone, balance, created_at);
+                } else if (role.equals("STAFF")) {
+                    return new Staff(userId, userCode, username, password, fullName, age, email, phone, balance, created_at);
+                } else if (role.equals("CUSTOMER")) {
+                    return new Customer(userId, userCode, username, password, fullName, age, email, phone, balance, created_at);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

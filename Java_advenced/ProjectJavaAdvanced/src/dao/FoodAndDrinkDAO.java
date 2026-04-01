@@ -70,4 +70,41 @@ public class FoodAndDrinkDAO {
 
         return true;
     }
+
+    public static boolean updateStock(int foodAndDrinkId, int quantityChange) {
+        String sql = "UPDATE foodAndDrinks SET stock = stock + ? WHERE foodAndDrink_id = ?";
+        try {
+            PreparedStatement prsmt = connection.prepareStatement(sql);
+            prsmt.setInt(1, quantityChange);
+            prsmt.setInt(2, foodAndDrinkId);
+            int rowsAffected = prsmt.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Cập nhật tồn kho thành công!");
+                return true;
+            }
+        } catch (SQLException e) {
+            System.out.println("Lỗi cập nhật tồn kho: " + e.getMessage());
+        }
+        return false;
+    }
+
+    public static FoodAndDrink getFoodAndDrinkById(int foodAndDrinkId) {
+        String sql = "SELECT * FROM foodAndDrinks WHERE foodAndDrink_id = ?";
+        try {
+            PreparedStatement prsmt = connection.prepareStatement(sql);
+            prsmt.setInt(1, foodAndDrinkId);
+            ResultSet resultSet = prsmt.executeQuery();
+            if (resultSet.next()) {
+                String name = resultSet.getString("name");
+                String description = resultSet.getString("description");
+                double price = resultSet.getDouble("price");
+                int stock = resultSet.getInt("stock");
+
+                return new FoodAndDrink(foodAndDrinkId, name, description, price, stock);
+            }
+        } catch (SQLException e) {
+            System.out.println("Lỗi truy vấn F&B: " + e.getMessage());
+        }
+        return null;
+    }
 }

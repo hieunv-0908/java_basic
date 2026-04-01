@@ -1,13 +1,14 @@
 package model;
 
-public enum StatusMachine {
-    AVAILABLE("AVAILABLE"),
-    IN_USE("IN_USE"),
-    MAINTENANCE("MAINTENANCE");
+public enum BookingStatus {
+    BOOKED("BOOKED"),
+    USING("USING"),
+    DONE("DONE"),
+    CANCELLED("CANCELLED");
 
     private String statusCode;
 
-    StatusMachine(String statusCode) {
+    BookingStatus(String statusCode) {
         this.statusCode = statusCode;
     }
 
@@ -15,8 +16,8 @@ public enum StatusMachine {
         return statusCode;
     }
 
-    public static StatusMachine fromStatus(String statusCode) {
-        for (StatusMachine s : StatusMachine.values()) {
+    public static BookingStatus fromStatus(String statusCode) {
+        for (BookingStatus s : BookingStatus.values()) {
             if (s.statusCode.equals(statusCode)) return s;
         }
         throw new IllegalArgumentException("Invalid status: " + statusCode);

@@ -5,14 +5,12 @@ public class Service {
     private String serviceName;
     private String description;
     private double price;
-    private int stock;
 
-    public Service(int serviceId, String serviceName, String description, double price, int stock) {
+    public Service(int serviceId, String serviceName, String description, double price) {
         this.serviceId = serviceId;
         this.serviceName = serviceName;
         this.description = description;
         this.price = price;
-        this.stock = stock;
     }
 
     public Service() {
@@ -48,13 +46,5 @@ public class Service {
 
     public void setPrice(double price) {
         this.price = price;
-    }
-
-    public int getStock() {
-        return stock;
-    }
-
-    public void setStock(int stock) {
-        this.stock = stock;
     }
 }

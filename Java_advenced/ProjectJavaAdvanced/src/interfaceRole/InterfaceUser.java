@@ -17,12 +17,24 @@ public class InterfaceUser {
 
     public static User handleMainMenu() {
         while (true) {
-            System.out.println("\n=== CYBER GAMING SYSTEM ===");
-            displayInterface();
-            System.out.print("Choose an option: ");
+            System.out.println("\n╔═══════════════════════════════════════════════════╗");
+            System.out.println("║          HỆ THỐNG QUẢN LÝ CYBER GAMING           ║");
+            System.out.println("╠═══════════════════════════════════════════════════╣");
+            System.out.println("║ 1. Đăng nhập                                      ║");
+            System.out.println("║ 2. Đăng ký                                        ║");
+            System.out.println("║ 3. Thoát                                          ║");
+            System.out.println("╚═══════════════════════════════════════════════════╝");
+            System.out.print("Chọn thao tác: ");
 
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+            int choice;
+            try {
+                choice = scanner.nextInt();
+                scanner.nextLine();
+            } catch (Exception e) {
+                scanner.nextLine();
+                System.out.println("Nhập không hợp lệ!");
+                continue;
+            }
 
             switch (choice) {
                 case 1:
@@ -31,11 +43,11 @@ public class InterfaceUser {
                     register();
                     break;
                 case 3:
-                    System.out.println("Goodbye!");
+                    System.out.println("Tạm biệt!");
                     System.exit(0);
                     break;
                 default:
-                    System.out.println("Invalid choice!");
+                    System.out.println("Lựa chọn không hợp lệ!");
             }
         }
     }

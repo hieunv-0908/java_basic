@@ -1,5 +1,6 @@
 package model;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class Admin extends User {
@@ -8,5 +9,9 @@ public class Admin extends User {
     }
 
     public Admin() {
+    }
+
+    public Admin(int userId, String userCode, String username, String password, String fullName, int age, String email, String phone, Double balance, Timestamp createdAt) {
+        super(userId, userCode, username, fullName, password, age, email, phone, Role.ADMIN, balance, new Date(createdAt.getTime()));
     }
 }
