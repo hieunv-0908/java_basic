@@ -1,0 +1,105 @@
+## PHÂN TÍCH SCOPE & RACE CONDITION
+
+### 1. Tại sao thông báo lỗi đăng nhập phải dùng Request Scope?
+
+* Request Scope chỉ tồn tại trong **1 request duy nhất**
+* Khi user submit form sai:
+  → trả về lại trang login + hiển thị lỗi
+
+Sau khi reload:
+→ request mới → dữ liệu lỗi biến mất
+
+#### Nếu dùng Session Scope thì sao?
+
+* Lỗi sẽ bị lưu lâu trong session
+* User login lại đúng → vẫn thấy lỗi cũ
+* Gây:
+
+  * hiển thị sai
+  * trải nghiệm người dùng kém
+
+---
+
+### 2. Tại sao totalViewCount phải dùng Application Scope?
+
+* Application Scope dùng chung cho **toàn bộ hệ thống**
+* Tất cả user đều thấy cùng 1 giá trị
+
+#### Nếu dùng Session Scope:
+
+* Mỗi user có 1 bản riêng
+* Ví dụ:
+
+  * User A xem 2 lần → thấy 2
+  * User B mới vào → thấy 1
+
+→ Không còn là “tổng toàn hệ thống”
+
+---
+
+### 3. Race Condition là gì?
+
+Race Condition xảy ra khi:
+
+* Nhiều thread truy cập và sửa cùng 1 dữ liệu
+* Kết quả bị sai do tranh chấp
+
+---
+
+### 4. Phân tích đoạn code lỗi
+
+```java
+Integer count = (Integer) application.getAttribute("totalViewCount");
+if (count == null) count = 0;
+count++;
+application.setAttribute("totalViewCount", count);
+```
+
+#### Vấn đề:
+
+Giả sử 2 user truy cập cùng lúc:
+
+* Thread A đọc count = 5
+* Thread B đọc count = 5
+* A tăng → 6
+* B tăng → 6
+
+→ Kết quả cuối = 6 (sai, đúng phải là 7)
+
+---
+
+### 5. Cách khắc phục
+
+#### Cách 1 — synchronized
+
+```java
+synchronized (application) {
+    Integer count = (Integer) application.getAttribute("totalViewCount");
+    if (count == null) count = 0;
+    count++;
+    application.setAttribute("totalViewCount", count);
+}
+```
+
+---
+
+#### Cách 2 — dùng AtomicInteger (tốt hơn)
+
+```java
+AtomicInteger count = (AtomicInteger) application.getAttribute("totalViewCount");
+if (count == null) {
+    count = new AtomicInteger(0);
+    application.setAttribute("totalViewCount", count);
+}
+count.incrementAndGet();
+```
+
+---
+
+### Kết luận
+
+| Scope       | Dùng cho                |
+| ----------- | ----------------------- |
+| Request     | dữ liệu tạm (lỗi login) |
+| Session     | thông tin user          |
+| Application | dữ liệu toàn hệ thống   |

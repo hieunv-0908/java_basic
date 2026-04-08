@@ -1,0 +1,23 @@
+PHẦN 1 — PHÂN TÍCH LOGIC
+#	Vị trí (dòng/thành phần)	Loại vấn đề	Mô tả chi tiết hậu quả
+1	<%! private int requestCounter = 0; %>	Race Condition	Biến khai báo bằng Declaration là biến dùng chung cho toàn bộ Servlet (multi-thread). Khi nhiều request chạy đồng thời sẽ gây sai lệch dữ liệu, không an toàn thread.
+2	<% for(...) { %>	Logic trong View (Code smell)	Viết vòng lặp Java trực tiếp trong JSP làm View không còn “ngốc nghếch”, khó bảo trì, vi phạm mô hình MVC.
+3	<%= student.getName() %>	Expression (thiếu kiểm soát XSS)	In trực tiếp dữ liệu ra HTML mà không escape → có thể bị tấn công XSS nếu dữ liệu chứa script độc hại.
+4	<!-- comment -->	Sai loại Comment	HTML comment vẫn được gửi về trình duyệt → lộ thông tin nội bộ. Nên dùng JSP comment <%-- --%> để ẩn hoàn toàn.
+5	<%= something %>;	Sai cú pháp Expression	Expression <%= %> không cần dấu ;. Việc thêm ; có thể gây lỗi biên dịch JSP hoặc hành vi không mong muốn.
+6	<% if(score > 5) { %>	Logic trong View	Điều kiện xử lý nghiệp vụ đặt trong JSP làm code rối, khó test, nên chuyển sang Controller hoặc dùng JSTL.
+7	In dữ liệu user input trực tiếp	XSS	Không dùng <c:out> hoặc escape HTML → người dùng có thể chèn <script> gây tấn công.
+8	Sử dụng Scriptlet nhiều nơi	Thiết kế kém	Trộn Java + HTML gây khó đọc, khó debug, không theo best practice của Spring MVC.
+
+Kết luận:
+
+Trang JSP đang vi phạm nguyên tắc “Thin View”
+Chứa quá nhiều Java logic
+Không an toàn (XSS, thread)
+Khó bảo trì và mở rộng
+
+Cần refactor sang:
+
+EL ${}
+JSTL <c:forEach>, <c:if>, <c:choose>
+<c:out> để bảo mật

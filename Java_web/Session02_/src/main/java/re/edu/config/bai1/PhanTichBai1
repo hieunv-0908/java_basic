@@ -1,0 +1,94 @@
+## PHẦN 1 — PHÂN TÍCH LOGIC
+### 1. Lỗi trong MyWebAppInitializer.java
+Cấu hình:
+
+```java
+servletContext.addServlet("dispatcher", dispatcherServlet)
+              .addMapping("/api/*");
+```
+
+Vấn đề:
+
+* DispatcherServlet chỉ xử lý các URL có dạng:
+  `/api/*`
+* Nhưng request của người dùng là:
+  `/welcome`
+
+Vì `/welcome` không thuộc `/api/*`, nên:
+
+* Request không đi vào DispatcherServlet
+* Tomcat không tìm thấy tài nguyên tương ứng
+  → dẫn đến HTTP 404 — Not Found
+
+Kết luận:
+DispatcherServlet với mapping `/api/*` chỉ lắng nghe:
+
+* `/api/welcome`
+* `/api/anything`
+
+Không lắng nghe:
+
+* `/welcome`
+
+---
+
+### 2. Lỗi trong WebConfig.java
+
+Cấu hình:
+
+```java
+@ComponentScan(basePackages = "com.demo.service")
+```
+
+Vấn đề:
+
+* Spring chỉ quét các bean trong package:
+  `com.demo.service`
+* Trong khi đó:
+  `@Controller` nằm ở package khác (ví dụ: `com.demo.controller`)
+
+Kết quả:
+
+* Spring không tìm thấy Controller
+* Không có bean nào xử lý request `/welcome`
+
+→ dẫn đến:
+
+* Không mapping được URL → Controller
+* Gây lỗi 404 (hoặc lỗi khác nếu đi xa hơn)
+
+---
+
+### 3. Tổng hợp
+
+Nếu chỉ sửa lỗi 1 (Servlet Mapping) mà không sửa lỗi 2 thì sao?
+
+Giả sử sửa:
+
+```java
+.addMapping("/");
+```
+
+Request `/welcome` đã đi vào DispatcherServlet
+
+Nhưng:
+
+* Spring vẫn không tìm thấy Controller
+* Vì ComponentScan sai package
+
+Kết quả:
+
+* DispatcherServlet nhận request
+* Nhưng không có Handler xử lý
+  → vẫn bị 404
+
+---
+
+Kết luận cuối:
+
+| Lỗi                 | Hậu quả                                |
+| ------------------- | -------------------------------------- |
+| Sai Servlet Mapping | Không vào được DispatcherServlet → 404 |
+| Sai ComponentScan   | Không tìm thấy Controller → 404        |
+| Chỉ sửa 1 trong 2   | Vẫn lỗi                                |
+| Sửa cả 2            | Ứng dụng chạy bình thường              |
