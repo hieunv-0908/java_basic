@@ -1,0 +1,16 @@
+Cách A:
+/bai3/orders/5
+Số 5 nằm trong URI Path (đường dẫn chính của URL)
+Nó là một phần của đường dẫn
+Thường dùng để xác định tài nguyên cụ thể
+
+Cách B:
+/bai3/orders?id=5
+Số 5 nằm trong Query String
+
+Phần sau dấu ?
+Dạng key=value
+Thường dùng cho:
+lọc dữ liệu
+tìm kiếm
+tùy chọn thêm
