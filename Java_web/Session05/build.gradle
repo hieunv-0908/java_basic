@@ -1,0 +1,46 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+group 're'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    junitVersion = '5.13.2'
+}
+
+sourceCompatibility = '21'
+targetCompatibility = '21'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+dependencies {
+    // Spring MVC
+    implementation 'org.springframework:spring-webmvc:6.1.6'
+
+    // Thymeleaf core
+    implementation 'org.thymeleaf:thymeleaf:3.1.2.RELEASE'
+
+    // Thymeleaf + Spring 6
+    implementation 'org.thymeleaf:thymeleaf-spring6:3.1.2.RELEASE'
+
+    // Servlet (Jakarta - Tomcat 10+)
+    compileOnly 'jakarta.servlet:jakarta.servlet-api:6.0.0'
+
+    // JSTL (nếu dùng JSP)
+    implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:3.0.0'
+
+    // Logging
+    implementation 'ch.qos.logback:logback-classic:1.4.14'
+}
+
+test {
+    useJUnitPlatform()
+}

@@ -1,0 +1,74 @@
+BÀI 1: PHÁ ÁN LỖI KẾT XUẤT GIAO DIỆN
+
+1. Mô tả vấn đề
+
+Hệ thống sau khi tích hợp Thymeleaf vào dự án Spring MVC (trước đó sử dụng JSP) đã xảy ra lỗi:
+
+HTTP 500
+Hoặc không hiển thị đúng giao diện
+
+Nguyên nhân đến từ việc cấu hình sai `TemplateResolver`.
+
+2. Phân tích lỗi trong cấu hình
+
+Lỗi 1: Sai thư mục chứa template
+
+java
+resolver.setPrefix("/WEB-INF/views");
+
+Thymeleaf mặc định sử dụng thư mục `templates`
+Việc dùng `views` gây sai đường dẫn đến file giao diện
+
+Lỗi 2: Sai định dạng file
+
+java
+resolver.setSuffix(".jsp");
+
+.jsp là công nghệ JSP
+Thymeleaf sử dụng .html
+Điều này khiến hệ thống không tìm được file phù hợp
+
+Lỗi 3: Thiếu cấu hình Template Mode
+
+Không khai báo loại template (`HTML`)
+Có thể gây lỗi khi render
+
+Lỗi 4: Thiếu ApplicationContext
+
+Thymeleaf cần `ApplicationContext` để hoạt động đúng trong Spring
+
+3. Hướng khắc phục
+
+Cấu hình lại TemplateResolver đúng chuẩn
+
+Điều chỉnh cấu trúc thư mục
+
+Đảm bảo cấu trúc đúng:
+
+src/main/webapp/
+ WEB-INF/
+     templates/
+         home.html
+
+
+4. Kết luận
+
+Lỗi xảy ra do:
+
+Nhầm lẫn giữa JSP và Thymeleaf
+Cấu hình sai đường dẫn và định dạng file
+
+Sau khi sửa:
+
+Hệ thống render đúng giao diện HTML
+Không còn lỗi HTTP 500
+
+5. Bài học rút ra
+
+Khi chuyển đổi công nghệ View cần kiểm tra kỹ cấu hình
+JSP và Thymeleaf có cơ chế hoạt động khác nhau
+Luôn đảm bảo:
+
+Đúng thư mục (`templates`)
+Đúng định dạng (`.html`)
+Đủ cấu hình cần thiết

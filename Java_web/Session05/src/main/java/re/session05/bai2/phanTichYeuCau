@@ -1,0 +1,49 @@
+BÀI 2: THIẾT KẾ TRANG DANH SÁCH MÓN ĂN ĐỘNG
+
+1. Mô tả bài toán
+
+Hệ thống cần hiển thị danh sách món ăn từ phía server lên giao diện.
+Mỗi món có trạng thái còn hàng hoặc hết hàng, nếu hết hàng phải hiển thị màu đỏ.
+Nếu không có dữ liệu, phải hiển thị thông báo thay vì bảng rỗng.
+
+2. Cấu trúc đối tượng Dish
+
+Đối tượng Dish được định nghĩa với các thuộc tính:
+
+* id: mã món ăn (int)
+* name: tên món ăn (String)
+* price: giá (double)
+* isAvailable: trạng thái (boolean)
+
+Ý nghĩa:
+
+* true: còn hàng
+* false: hết hàng
+
+
+ 3. Sơ đồ luồng I/O
+
+Controller → Service → Controller → View (Thymeleaf)
+
+Chi tiết:
+
+1. Người dùng truy cập URL: /bai2/dishes
+2. Controller gọi Service để lấy danh sách món ăn
+3. Service trả về List<Dish>
+4. Controller đưa danh sách vào Model với key "dishes"
+5. Thymeleaf nhận dữ liệu và render ra HTML
+
+## 4. Xử lý logic hiển thị
+
+* Sử dụng th:each để lặp danh sách
+* Sử dụng th:if / th:unless để kiểm tra trạng thái
+* Nếu isAvailable = false → hiển thị màu đỏ
+* Nếu danh sách null hoặc empty → hiển thị thông báo
+
+ 5. Kết luận
+
+Bài này giúp:
+
+* Hiểu cách truyền dữ liệu từ Controller sang View
+* Thành thạo th:each, th:if trong Thymeleaf
+* Biết xử lý trường hợp dữ liệu rỗng

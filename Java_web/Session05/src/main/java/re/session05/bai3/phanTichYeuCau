@@ -1,0 +1,53 @@
+BÀI 3: XÂY DỰNG MODULE CẬP NHẬT THÔNG TIN THỰC ĐƠN
+
+1. Mô tả bài toán
+
+Hệ thống cần cho phép quản lý chỉnh sửa thông tin món ăn.
+Khi nhấn nút "Chỉnh sửa" từ danh sách món ăn, hệ thống phải:
+
+Lấy đúng món theo ID
+Đổ dữ liệu cũ vào form
+Cho phép chỉnh sửa
+
+2. Phân tích luồng dữ liệu (Data Flow)
+
+Luồng xử lý:
+
+1. Người dùng nhấn nút "Chỉnh sửa" tại trang danh sách (View A)
+2. Trình duyệt gửi request đến URL: /bai3/edit/{id}
+3. Controller nhận ID từ URL bằng @PathVariable
+4. Controller gọi Service để tìm món ăn theo ID
+5. Nếu tìm thấy:
+
+   * Đưa đối tượng Dish vào Model với key "dish"
+   * Trả về trang edit-dish.html (View B)
+6. Nếu không tìm thấy:
+
+   * Chuyển hướng về /bai2/dishes
+   * Kèm theo thông báo lỗi
+
+3. Thymeleaf sử dụng
+
+* th:object: gắn object Dish vào form
+* th:field: binding dữ liệu vào input
+* @{...}: tạo URL động
+* @{|...|}: truyền tham số vào URL
+
+---
+
+## 4. Xử lý lỗi dữ liệu
+
+Nếu ID không tồn tại:
+
+* Không render trang edit
+* Redirect về danh sách
+* Hiển thị thông báo: "Không tìm thấy món ăn yêu cầu!"
+
+
+5. Kết luận
+
+Bài này giúp:
+
+* Hiểu rõ data binding 2 chiều
+* Sử dụng th:object và th:field
+* Xử lý lỗi khi dữ liệu không tồn tại
